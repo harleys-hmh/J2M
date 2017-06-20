@@ -1,0 +1,68 @@
+
+# "Setup Area" - see MEXNP-562
+# "Interaction Area"
+## "Layout settings" contains:
+### "Drag trays are" - radio buttons with labels:
+#### At the bottom
+#### On the right
+### "Labels in drop areas are" - radio buttons with labels: On top, On the right, On bottom, On the left
+## "Validation settings" panel:
+### "Assign numbers to drag items and drop areas" radio group: Yes (default), No
+## "Regions" contains:
+### Image element
+#### "Add image" button which, if selected, presents with the “Edit Image” screen
+#### "Caption" rich text input - 160 Character guide
+#### "Credits" rich text input
+#### "Alt text" text input
+### Preview element
+#### Displays background image {color:red}(# ??){color}
+#### Displays all available drop areas {color:red}(AC # ??){color} as pink rectangles which:
+##### {color:red}May display a label configured somewhere?{color}
+##### Can be transformed by dragging the element itself or individual vertices, or by rotating the element itself
+### Drop areas
+#### "+ Add drop area" link
+#### Numeric list showing all available drop areas, and active drop area
+#### "Grid selector" contains:
+##### Delete button
+##### "Use cells to align drag items" - checkbox
+###### If selected, displays:
+####### Rows - numeric input
+####### Columns - numeric input
+####### Preview table showing Rows x Columns, displaying an asterix (\*) where cells contains 1+ drag item(s)
+###### {color:red}Otherwise, if numbers are being assigned (AC#1.2.3), display:{color}
+####### {color:red}"Optional total value" numeric input, supporting integers and decimal values to the thousandth (no min/max){color}
+##### "Available drag items" list previewing drag items from {color:red}(AC #??){color}
+###### If cells are enabled (AC #??), author must select single cell in preview table to activate selection of drag items
+###### Otherwise, list will be active
+###### Once activated, any combination of drag items can be selected from the list to associate valid drag items for the active drop area
+## "Drag tray settings" panel contains:
+### "Content Type: - radio group, supporting:
+#### Text (default)
+#### Image
+#### Equation
+### "Tray type" - radio group, supporting:
+#### Dispenser (default)
+#### Non-dispenser
+## "Drag tray(s)"
+### "Randomize items in this tray?" - toggle
+### *Drag item" panel
+#### "Item content" will display different fields based on content type selected in {color:red}AC # (???){color}:
+##### Text - rich text input
+##### Image - Standard image inputs
+##### Equation- Standard equation inputs
+#### Number of items:
+##### "Number of items" input textbox - min 1 / max 20, placeholder text "Between 1 and 20"
+##### "Infinite" toggle switch
+###### {color:red}Only available for "Dispenser" tray type - see {color:red}AC #?{color}
+###### If enabled, will disabled/clear "Number of items"
+#### "Optional numeric value" - text input, placeholder "Enter integer value"
+##### Only available if "Assign numbers to drag items and drop areas" is set to "Yes" - see AC # ???
+##### To be used where the drag item is required to have a value - e.g. square = 100, line = 10, circle = 1
+#### "Item size in tray" - dropdown providing sizes Small, Medium, Large
+#### "Optional VO text" - VO input, placeholder "Enter VO text"
+#### {color:red}"Target drop areas:" listing all target areas added{color} - delete
+#### "+ Add drag item" button - min 1, max 10
+##### This will create another drag item {color:red}(see AC ??){color}
+### "+Add drag tray" button, min 1, max 5
+#### This will create another drag tray {color:red}(see AC ??){color}
+# "Feedback & Hint Area"

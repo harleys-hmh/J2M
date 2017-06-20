@@ -8,6 +8,43 @@
 	 * @returns {string} - Markdown formatted text
 	 */
 	function toM(input) {
+
+		// Process numeric lists first to avoid false positive with headings
+		input = input.replace(/([#]+ (.)+(\s)+)+/g, match => {
+			var results = [];
+			var items = match.match(/([#]+ (.)+\s)+/g);
+			var depth = {}; // Track each depth separately for continuity
+			var level = 0;
+			var re = /^([#]+ )/g;
+			items.forEach(item => {
+				var str = item.match(re)[0];
+				var levelCurrent = str.length - 1;
+				var reset = false;
+				if (level != levelCurrent) {
+					if (level < levelCurrent) {
+						reset = true;
+					}
+					level = levelCurrent;
+					if (!depth[level] || reset) {
+						depth[level] = 0;
+					}
+				}
+				depth[level]++;
+
+				var result = item.replace(re, (match) => {
+					return Array(levelCurrent).join('    ') + `${depth[levelCurrent]}. `;
+				});
+
+				results.push(result);
+				// console.log(result);
+			});
+			return results.join('\n');
+		});
+		console.log(input);
+
+		// Exiting now since one of the following .replace calls hangs indefinitely
+		process.exit();
+
 		input = input.replace(/^h([0-6])\.(.*)$/gm, function (match,level,content) {
 			return Array(parseInt(level) + 1).join('#') + content;
 		});
@@ -16,6 +53,8 @@
 			var to = (wrapper === '*') ? '**' : '*';
 			return to + content + to;
 		});
+
+		// input = input.replace(/([\t| ]*)(# )([-\w]*)?/g, '$11. $3'); // PR from otherguy
 
 		input = input.replace(/\{\{([^}]+)\}\}/g, '`$1`');
 		input = input.replace(/\?\?((?:.[^?]|[^?].)+)\?\?/g, '<cite>$1</cite>');
@@ -108,6 +147,21 @@
 
 		input = input.replace(/^([#]+)(.*?)$/gm, function (match,level,content) {
 			return 'h' + level.length + '.' + content;
+		});
+
+		// Process numeric lists now that headings have been replaced
+		input = input.replace(/^( )*(\d)+. /gm, function (match) {
+			var li = match.replace(/^( )*/g, function (spaces) {
+				var hashes;
+				if (spaces.length >= 4) {
+					hashes = Array(Math.floor(spaces.length / 4) + 1);
+				} else {
+					hashes = [];
+				}
+				return hashes.join('#');
+			});
+
+			return li.replace(/(\d)+./, '#');
 		});
 
 		input = input.replace(/([*_]+)(.*?)\1/g, function (match,wrapper,content) {
